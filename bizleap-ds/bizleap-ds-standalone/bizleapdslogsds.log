@@ -1,0 +1,10 @@
+2018-05-18 17:26:29 DEBUG logging:192 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
+2018-05-18 17:26:32 DEBUG FileLoaderImpl:58 - File name....employee.txt
+2018-05-18 17:26:32 DEBUG FileLoaderImpl:45 - About to read file :C:bizleapdsdata/employee.txt
+2018-05-18 17:26:32 ERROR FileLoaderImpl:61 - File not found: employee.txt
+2018-05-18 17:26:32 DEBUG FileLoaderImpl:58 - File name....company.txt
+2018-05-18 17:26:32 DEBUG FileLoaderImpl:45 - About to read file :C:bizleapdsdata/company.txt
+2018-05-18 17:26:32 ERROR FileLoaderImpl:61 - File not found: company.txt
+2018-05-18 17:26:32 DEBUG AssociationMapperImpl:19 - 
+2018-05-18 17:26:32 DEBUG AssociationMapperImpl:20 - []
+2018-05-18 17:26:32 DEBUG AssociationMapperImpl:21 - 
