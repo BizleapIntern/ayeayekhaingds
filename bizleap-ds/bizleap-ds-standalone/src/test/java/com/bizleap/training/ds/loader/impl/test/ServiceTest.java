@@ -1,11 +1,14 @@
 package com.bizleap.training.ds.loader.impl.test;
 
+import org.junit.runner.RunWith;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import com.bizleap.training.ds.loader.DataManager;
 import com.bizleap.training.ds.service.CompanyService;
 import com.bizleap.training.ds.service.EmployeeService;
@@ -15,12 +18,10 @@ import com.bizleap.training.ds.service.EmployeeService;
 @ContextConfiguration(locations={"classpath:/applicationContext.xml","classpath:/hibernateContext.xml"})
 @PropertySource({"classpath:log4j.properties", "classpath:/application.properties"})
 @ComponentScan({"com.bizleap.training.ds.loader"})
-
-
 public class ServiceTest {
 	
 	@Autowired
-	//@Qualifier("dataManager")
+	@Qualifier("dataManager")
 	protected DataManager dataManager;
 	
 	//@Autowired

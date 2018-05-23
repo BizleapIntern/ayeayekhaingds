@@ -1,4 +1,5 @@
 package com.bizleap.training.ds.loader.impl;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,43 +17,47 @@ import com.bizleap.training.ds.loader.DataManager;
 
 @Service("dataManager")
 public class DataManagerImpl implements DataManager {
-	List<Employee> employeeList=new ArrayList<Employee>();
-	List<Company> companyList=new ArrayList<Company>();
-	
+	List<Employee> employeeList ;
+	List<Company> companyList ;
+
 	@Autowired
 	private DataLoader dataLoader;
 	
 	@Autowired
-	private AssociationMapper associationMapper;
-	
+	CompanySaver companySaver;
+
 	@Autowired
-	private CompanySaver companySaver;
-	
-	public void load() throws IOException, ServiceUnavailableException{
-		//load the data
+	private AssociationMapper associationMapper;
+
+	public void load() throws IOException, ServiceUnavailableException {
+		// load the data
 		dataLoader.loadData();
-		//build the association
+		// build the association
 		associationMapper.buildAssociations();
 		companySaver.setCompanyList(companyList);
 		companySaver.savePass1();
 	}
 
 	public void print() {
-		for(Employee employee:employeeList) {
+		for (Employee employee : employeeList) {
 			System.out.println(employee);
 		}
-		for(Company company:companyList) {
+		for (Company company : companyList) {
 			System.out.println(company);
 		}
 	}
 
 	@Override
 	public List<Employee> getEmployeeList() {
+		if(employeeList==null)
+			this.employeeList= new ArrayList<Employee>();
 		return employeeList;
 	}
 
 	@Override
 	public List<Company> getCompanyList() {
+		if(companyList==null)
+			this.companyList= new ArrayList<Company>();
 		return companyList;
 	}
 }

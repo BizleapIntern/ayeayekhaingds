@@ -13,15 +13,15 @@ public class Employee extends AbstractEntity {
 
 	private String title;
 	private int age, salary;
-	
+
 	@ManyToOne
-	@JoinColumn(name="companyId")
+	@JoinColumn(name = "companyId")
 	private Company workForCompany;
 
 	public Employee() {
 		super();
 	}
-	
+
 	public Employee(String boId) {
 		super(boId);
 	}
@@ -49,7 +49,7 @@ public class Employee extends AbstractEntity {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	
+
 	public Company getWorkForCompany() {
 		return workForCompany;
 	}
@@ -57,27 +57,22 @@ public class Employee extends AbstractEntity {
 	public void setWorkForCompany(Company workForCompany) {
 		this.workForCompany = workForCompany;
 	}
-	
+
 	public static Employee parseEmployee(String line) {
-			String[] tokens=line.split(",");
-			Employee employee=new Employee(tokens[0]);
-			employee.setName(tokens[1]);
-			employee.setAge(Integer.parseInt(tokens[2]));
-			employee.setTitle(tokens[3]);
-			employee.setSalary(Integer.parseInt(tokens[4]));
-			employee.setEmail(tokens[5]);
-			employee.setPhone(tokens[6]);
-			employee.setWorkForCompany(new Company(tokens[7]));
-			return employee;
+		String[] tokens = line.split(",");
+		Employee employee = new Employee(tokens[0]);
+		employee.setName(tokens[1]);
+		employee.setAge(Integer.parseInt(tokens[2]));
+		employee.setTitle(tokens[3]);
+		employee.setSalary(Integer.parseInt(tokens[4]));
+		employee.setEmail(tokens[5]);
+		employee.setPhone(tokens[6]);
+		employee.setWorkForCompany(new Company(tokens[7]));
+		return employee;
 	}
 
 	public String toString() {
-		return new ToStringBuilder(this)
-				.appendSuper(super.toString())
-				.append("title", title)
-				.append("age",age)
-				.append("salary",salary)
-				.append("workForCompany",workForCompany.getBoId())
-				.toString();
+		return new ToStringBuilder(this).appendSuper(super.toString()).append("title", title).append("age", age)
+				.append("salary", salary).append("workForCompany", workForCompany.getBoId()).toString();
 	}
 }

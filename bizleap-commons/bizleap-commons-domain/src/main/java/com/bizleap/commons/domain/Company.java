@@ -16,13 +16,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Company extends AbstractEntity{
 	private String address,ceo;
 	
-	@OneToMany(mappedBy="workForCompany", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="workForCompany", fetch=FetchType.LAZY , cascade=CascadeType.ALL)
 	private List<Employee> employeeList;
-
 	
 	public Company() {
-		
+		super();
 	}
+	
+
 	public Company(String boId) {
 		super(boId);
 	}
@@ -45,10 +46,10 @@ public class Company extends AbstractEntity{
 	
 	public List<Employee> getEmployeeList() {
 		if(employeeList==null)
-			this.employeeList=new ArrayList<Employee>();
+		   this.employeeList=new ArrayList<Employee>();		
 		return employeeList;
 	}
-	
+
 	public void setEmployeeList(List<Employee> employeeList) {
 		this.employeeList = employeeList;
 	}

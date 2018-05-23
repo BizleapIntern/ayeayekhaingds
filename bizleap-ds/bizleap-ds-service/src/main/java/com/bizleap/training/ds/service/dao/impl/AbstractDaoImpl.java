@@ -13,10 +13,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.transform.RootEntityResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.CannotCreateTransactionException;
-
+import com.bizleap.common.domain.utils.Printer;
 import com.bizleap.commons.domain.enums.EntityStatus;
 import com.bizleap.commons.domain.exception.ServiceUnavailableException;
-import com.bizleap.commons.domain.utils.Printer;
+
 import com.bizleap.training.ds.service.dao.AbstractDao;
 
 /**
@@ -62,7 +62,7 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements Abst
 	@Override
 	public List<E> findByString(String queryString, String data) {
 		List<E> entityList;
-		Query query = getCurrentSession().createQuery(queryString);
+		Query query = getCurrentSession().createQuery(queryString).setResultTransformer(RootEntityResultTransformer.INSTANCE).setParameter("dataInput", data);
 		entityList = query.list();
 		for (E entity : entityList)
 			Hibernate.initialize(entity);
@@ -102,7 +102,7 @@ public abstract class AbstractDaoImpl<E, I extends Serializable> implements Abst
 	@Override
 	public List<E> findByStringInteger(String queryString, String data, int data1) {
 		List<E> entityList;
-		Query query = getCurrentSession().createQuery(queryString).setParameter("dataInput", data);
+		Query query = getCurrentSession().createQuery(queryString).setParameter("dataInput", data).setParameter("dataInput1", data1);
 		entityList = query.list();
 		for (E entity : entityList)
 			Hibernate.initialize(entity);

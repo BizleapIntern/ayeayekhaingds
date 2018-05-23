@@ -15,39 +15,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.bizleap.common.domain.utils.BizleapUtils;
+import com.bizleap.common.domain.utils.Printer;
 import com.bizleap.training.ds.loader.FileLoader;
-import com.bizleap.commons.domain.utils.BizleapUtils;
-import com.bizleap.commons.domain.utils.Printer;
 
-@Service("fileLoader")
+@Service
 public class FileLoaderImpl implements FileLoader {
 	private int lineNumber;
 	private String line;
 	private String fileName;
 	private Map<String, String> errorMap;
 	private BufferedReader bufferedReader;
-	
-//	@Autowired
-//	ConfigurationService configurationService;
 
-	//comment thetmar
+	// @Autowired
+	// ConfigurationService configurationService;
+
+	// comment thetmar
 	@Value("${application.data.directory}")
 	private String dataDir;
 	private static Logger logger = Logger.getLogger(FileLoaderImpl.class);
-	private static Printer printer = new Printer( logger ); 
+	private static Printer printer = new Printer(logger);
 
 	private BufferedReader getBufferedReader(String fileName) throws IOException {
 		return getBufferedReader(fileName, null);
 	}
 
 	private BufferedReader getBufferedReader(String fileName, String encodingType) throws IOException {
-		String fullyQualifiedfileName=BizleapUtils.makePath(dataDir, fileName);
-		logger.debug("About to read file :"+fullyQualifiedfileName);
+		String fullyQualifiedFileName = BizleapUtils.makePath(dataDir, fileName);
+		logger.debug("About to read file" + fullyQualifiedFileName);
 		if (org.apache.commons.lang3.StringUtils.isEmpty(encodingType)) {
+
 			
-			return new BufferedReader(new FileReader(fullyQualifiedfileName));
+			return new BufferedReader(new FileReader(fullyQualifiedFileName));
 		}
-		return new BufferedReader(new InputStreamReader(new FileInputStream(fullyQualifiedfileName), encodingType));
+		return new BufferedReader(
+				new InputStreamReader(new FileInputStream(fullyQualifiedFileName), encodingType));
 	}
 
 	@Override
@@ -59,6 +61,11 @@ public class FileLoaderImpl implements FileLoader {
 			bufferedReader = getBufferedReader(fileName, encodingType);
 		} catch (Exception e) {
 			logger.error("File not found: " + fileName);
+			// comment thetmar
+			bufferedReader = new BufferedReader(new FileReader(BizleapUtils.makePath(dataDir, "empty.txt")));
+			// bufferedReader = new BufferedReader(new
+			// FileReader(configurationService.makeResourcePath(ResourceType.IMPORT,
+			// "empty.txt")));
 		}
 		lineNumber = 0;
 		if (errorMap == null)
@@ -79,7 +86,7 @@ public class FileLoaderImpl implements FileLoader {
 	@Override
 	public void error(Exception ex) {
 		errorMap.put(String.valueOf(lineNumber), line);
-		printer.line( "Current input line: " + lineNumber + ": " + line);
+		printer.line("Current input line: " + lineNumber + ": " + line);
 		logger.error("Error encountered while passing - " + fileName, ex);
 	}
 
@@ -105,7 +112,7 @@ public class FileLoaderImpl implements FileLoader {
 
 	@Override
 	public String getLine() {
-		logger.debug( "line is: " + line );
+		logger.debug("line is: " + line);
 		return line;
 	}
 
@@ -119,14 +126,14 @@ public class FileLoaderImpl implements FileLoader {
 		if (errorMap.isEmpty())
 			return;
 
-		printer.header("Errors encountered while loading!!"); 
+		printer.header("Errors encountered while loading!!");
 		printer.line("Line with error(s) is:");
 
 		Iterator<String> iterator = errorMap.keySet().iterator();
 
 		while (iterator.hasNext()) {
 			String key = iterator.next();
-			printer.line( key + ":" + errorMap.get(key) ); 
+			printer.line(key + ":" + errorMap.get(key));
 		}
 	}
 

@@ -6,13 +6,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bizleap.common.domain.utils.Printer;
 import com.bizleap.commons.domain.Company;
 import com.bizleap.commons.domain.Employee;
 import com.bizleap.training.ds.loader.AssociationMapper;
 import com.bizleap.training.ds.loader.DataManager;
-import com.bizleap.commons.domain.utils.Printer;
 
-@Service("associationMapper")
+
+@Service
 public class AssociationMapperImpl implements AssociationMapper {
 	
 	List<Employee> employeeList=new ArrayList<Employee>();
@@ -20,7 +21,7 @@ public class AssociationMapperImpl implements AssociationMapper {
 	
 	@Autowired
 	private DataManager dataManager;
-	private static Logger logger = Logger.getLogger(CompanySaverImpl.class);
+	private static Logger logger = Logger.getLogger(AssociationMapperImpl.class);
 	private static Printer printer = new Printer(logger);
 	 
 	private void addCompanyToEmployee(Employee employee) {

@@ -3,14 +3,15 @@ package com.bizleap.training.ds.service.impl;
 import java.util.List;
 
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.bizleap.commons.domain.Company;
+
 import com.bizleap.commons.domain.enums.EntityType;
+import com.bizleap.commons.domain.enums.ObjectFullnessLevel;
 import com.bizleap.commons.domain.exception.ServiceUnavailableException;
 import com.bizleap.training.ds.service.CompanyService;
 import com.bizleap.training.ds.service.EmployeeService;
@@ -34,13 +35,28 @@ public class CompanyServiceImpl extends AbstractServiceImpl implements CompanySe
 		return companyList;
 	}
 	
+	public List<Company> findByCompanyBoId(String boId,ObjectFullnessLevel objectFullnessLevel) throws ServiceUnavailableException {
+		String queryStr = "select company from Company company where company.boId=:dataInput";
+		List<Company> companyList=companyDao.findByString(queryStr, boId);
+		switch(objectFullnessLevel) {
+		
+		     case SUMMARY:
+			     return companyList;
+		     default:
+            
+		}
+		hibernateInitializeCompanyList(companyList);
+        return companyList;
+		
+		
+	}
+	
 	@Override
 	public Company findByCompanyBoIdSingle(String boId) throws ServiceUnavailableException {
 		List<Company> companyList = findByCompanyBoId(boId);
 		if (!CollectionUtils.isEmpty(companyList)) {
-			if (companyList.size() > 0) {
-				return companyList.get(0);
-			}
+			return companyList.get(0);
+			
 		}
 		return null;
 	}

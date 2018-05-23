@@ -16,14 +16,20 @@ public abstract class AbstractEntity {
 	private String email;
 	private String phone;
 	
-	public AbstractEntity() {
-		
-	}
-	
 	public AbstractEntity(String boId) {
 		this.boId=boId;
 	}
 	
+	
+	
+//default constructor
+	public AbstractEntity() {
+		super();
+	}
+
+
+
+
 	public long getId() {
 		return id;
 	}
@@ -81,6 +87,10 @@ public abstract class AbstractEntity {
 		  return entity.getBoId().equals(getBoId());
 	}
 	
+	public boolean isBoIdRequired() {
+		return SystemConstant.BOID_REQUIRED.equals(getBoId());
+	}
+	
 	public String toString() {
 		return new ToStringBuilder(this)
 				.append("boId",boId)
@@ -88,10 +98,6 @@ public abstract class AbstractEntity {
 				.append("email",email)
 				.append("phone",phone)
 				.toString();
-	}
-	
-	public boolean isBoIdRequired() {
-		return SystemConstant.BOID_REQUIRED.equals(getBoId());
 	}
 
 }
